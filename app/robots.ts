@@ -14,6 +14,11 @@ export default function robots(): MetadataRoute.Robots {
           "/dashboard",
           "/inventory",
           "/invoices",
+          "/privacy",
+          "/cookie-policy",
+          "/grievance-officer",
+          "/data-rights",
+          "/children-policy",
         ],
         disallow: [
           "/api/",

@@ -4,18 +4,32 @@ import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-// Pages that should render on their own, without the Sidebar and Navbar.
-// Add more here if you want them too, e.g. ["/", "/login", "/register"].
-const PUBLIC_ROUTES = ["/","/login","/register"];
+// Pages that should render without the internal Sidebar and Navbar
+const PUBLIC_ROUTES = [
+  "/",
+  "/login",
+  "/register",
+  "/privacy",
+  "/cookie-policy",
+  "/grievance-officer",
+  "/data-rights",
+  "/children-policy",
+];
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isPublic = PUBLIC_ROUTES.includes(pathname ?? "");
 
-  // Public page: full-width, no Sidebar, no Navbar. This <main> is the scroll container.
+  // Public page: full-width, no Sidebar, no Navbar. Includes the DPDP-compliant Footer.
   if (isPublic) {
-    return <main className="flex-1 min-w-0 overflow-y-auto relative z-0">{children}</main>;
+    return (
+      <main className="flex-1 min-w-0 overflow-y-auto relative z-0 flex flex-col justify-between">
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </main>
+    );
   }
 
   return (
@@ -29,8 +43,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <Navbar />
         </Suspense>
 
-        <div className="flex-1 overflow-y-auto relative z-0">
-          {children}
+        <div className="flex-1 overflow-y-auto relative z-0 flex flex-col justify-between">
+          <div className="flex-1">{children}</div>
+          <Footer />
         </div>
       </div>
     </>
