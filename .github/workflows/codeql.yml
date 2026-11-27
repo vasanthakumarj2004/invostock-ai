@@ -1,5 +1,5 @@
 
-name: Advanced CodeQL Security Analysis
+name: "CodeQL Advanced Security Analysis"
 
 on:
   push:
@@ -13,29 +13,33 @@ on:
       - p01
 
   schedule:
-    - cron: '30 18 * * 1'
+    - cron: '15 23 * * 1'
 
   workflow_dispatch:
 
-permissions:
-  contents: read
-  security-events: write
-  actions: read
-
 jobs:
   analyze:
-    name: Analyze JavaScript and TypeScript
+    name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
 
     strategy:
       fail-fast: false
       matrix:
-        language:
-          - javascript-typescript
+        include:
+          - language: javascript-typescript
+            build-mode: none
+          - language: actions
+            build-mode: none
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -43,8 +47,8 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
-          build-mode: none
-          config-file: ./.github/codeql/codeql-config.yml
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
