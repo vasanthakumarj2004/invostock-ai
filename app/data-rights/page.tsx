@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import DataRightsClient from "./DataRightsClient";
+import DataRightsForm from "@/components/DataRightsForm";
 
 export const metadata: Metadata = {
   title: "Data Principal Rights Intake (Section 11) | InvoStock AI",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function DataRightsPage() {
-  return <DataRightsClient />;
+  return <DataRightsForm />;
 }

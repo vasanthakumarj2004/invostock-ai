@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   Users,
   CheckCircle2,
-  FileText,
   Clock,
   ShieldCheck,
   Send,
-  AlertCircle,
-  HelpCircle,
 } from "lucide-react";
 
 const RIGHTS_LIST = [
@@ -46,7 +42,7 @@ const RIGHTS_LIST = [
   },
 ];
 
-export default function DataRightsClient() {
+export default function DataRightsForm() {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
